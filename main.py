@@ -11,8 +11,8 @@ from mcp import types as mcp_types
 # Import utilities from the project
 from utils.openai_client import get_first_available_model, estimate_input_tokens
 from utils.concurrency import parse_concurrency_levels
-from utils.latency import test_speed_with_system_proxy
-from utils.speed import measure_speed, measure_speed_with_random_input
+from utils.latency import measure_latency
+from utils.throughput import measure_throughput
 
 # Configure logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
@@ -21,7 +21,7 @@ mcp = FastMCP("llm-api-benchmark-mcp-server")
 
 @mcp.tool(
     name="run_llm_benchmark",
-    description="Runs a throughput benchmark for LLM APIs, measuring generation speed, prompt throughput, and Time To First Token (TTFT) under various concurrency levels."
+    description="Runs a throughput benchmark for LLM APIs, measuring generation throughput, prompt throughput, and Time To First Token (TTFT) under various concurrency levels."
 )
 async def run_llm_benchmark(
     base_url: str,
@@ -111,23 +111,20 @@ async def run_llm_benchmark(
             # Test latency
             latency = 0.0
             try:
-                latency = await test_speed_with_system_proxy(base_url, 5)
+                latency = await measure_latency(base_url, 5)
             except Exception as e:
                 logging.warning(f"Latency test error: {e}")
 
             benchmark_results = []
             for conc in concurrency_levels:
-                benchmark_result_item = {}
                 if use_random_input:
-                    benchmark_result_item = await measure_speed_with_random_input(
-                        client, model_name, num_words // 4, conc, max_tokens, latency
+                    benchmark_result_item = await measure_throughput(
+                        client, model_name, conc, max_tokens, latency, num_words=num_words // 4
                     )
                 else:
-                    benchmark_result_item = await measure_speed(
-                        client, model_name, prompt, conc, max_tokens, latency
+                    benchmark_result_item = await measure_throughput(
+                        client, model_name, conc, max_tokens, latency, prompt=prompt
                     )
-
-                # Save results for later
                 benchmark_results.append(benchmark_result_item)
 
             # Round all float values in the benchmark_results dictionary
@@ -156,10 +153,11 @@ async def run_llm_benchmark(
             del client
         gc.collect()
 
+
 # --- Define MCP Tool Schema ---
 LLM_BENCHMARK_TOOL_SCHEMA = mcp_types.Tool(
     name="run_llm_benchmark",
-    description="Runs a throughput benchmark for LLM APIs, measuring generation speed, prompt throughput, and Time To First Token (TTFT) under various concurrency levels.",
+    description="Runs a throughput benchmark for LLM APIs, measuring generation throughput, prompt throughput, and Time To First Token (TTFT) under various concurrency levels.",
     inputSchema={
         "type": "object",
         "properties": {

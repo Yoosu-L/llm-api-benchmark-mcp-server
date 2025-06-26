@@ -1,7 +1,7 @@
 [project]
 name = "llm-api-benchmark-mcp-server"
 version = "0.1.0"
-description = "Runs a throughput benchmark for LLM APIs, measuring generation speed, prompt throughput, and Time To First Token (TTFT) under various concurrency levels."
+description = "Runs a throughput benchmark for LLM APIs, measuring generation throughput, prompt throughput, and Time To First Token (TTFT) under various concurrency levels."
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
@@ -9,4 +9,11 @@ dependencies = [
     "numpy>=2.3.1",
     "openai>=1.90.0",
     "requests>=2.32.4",
+]
+
+[dependency-groups]
+dev = [
+    "pytest>=8.4.1",
+    "pytest-asyncio>=1.0.0",
+    "respx>=0.22.0",
 ]

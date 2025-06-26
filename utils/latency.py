@@ -2,7 +2,7 @@ import time
 import httpx # Use httpx for async requests
 from urllib.parse import urlparse
 
-async def test_speed_with_system_proxy(base_url: str, num_requests: int) -> float:
+async def measure_latency(base_url: str, num_requests: int) -> float:
     """
     Tests the speed of the API by making multiple requests and calculating the average latency.
     """
