@@ -1,6 +1,6 @@
 [project]
 name = "llm-api-benchmark-mcp-server"
-version = "0.1.3"
+version = "0.1.4"
 description = "Runs a throughput benchmark for LLM APIs, measuring generation throughput, prompt throughput, and Time To First Token (TTFT) under various concurrency levels."
 readme = "README.md"
 requires-python = ">=3.12"
