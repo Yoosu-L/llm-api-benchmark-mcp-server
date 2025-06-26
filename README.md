@@ -59,31 +59,22 @@ If you wish to quickly try out the MCP server, a public SSE server is available.
 
 This is the recommended method for local deployment.
 
-1.  **Clone the repository:**
-    Place this project in your preferred local directory. Remember the local project path, as it will be used below.
+**MCP Configuration:**
 
-    ```sh
-    git clone https://github.com/Yoosu-L/llm-api-benchmark-mcp-server.git
-    ```
-
-2.  **Configure MCP Client:**
-    Update your MCP client configuration, replacing `/path/to/your/local/llm-api-benchmark-mcp-server` with the actual path to your cloned repository.
-
-    ```json
-    {
-      "mcpServers": {
-        "llm-benchmark-stdio": {
-          "command": "uv",
-          "args": [
-            "--directory",
-            "/path/to/your/local/llm-api-benchmark-mcp-server",
-            "run",
-            "main.py"
-          ]
-        }
-      }
+```json
+{
+  "mcpServers": {
+    "llm-benchmark-stdio":{
+      "command": "uvx",
+      "args": [
+        "--refresh",
+        "--quiet",
+        "llm-api-benchmark-mcp-server"
+      ]
     }
-    ```
+  }
+}
+```
 
 ### Local Deployment (sse)
 
@@ -96,35 +87,15 @@ Alternatively, you can deploy the server locally using SSE transport.
     cd llm-api-benchmark-mcp-server
     ```
 
-2.  **Modify `main.py`:**
+2.  **Modify `src/llm_api_benchmark_mcp_server/main.py`:**
     Comment out the stdio transport section and uncomment the SSE transport section. You can also change the `mcp.settings.port` to your desired port.
 
-    ```diff
-    --- a/main.py
-    +++ b/main.py
-    @@ -213,10 +213,10 @@ if __name__ == "__main__":
-         if tool: # Ensure tool is not None before patching
-             tool.parameters = LLM_BENCHMARK_TOOL_SCHEMA.inputSchema
-
-    -    # # For sse transport
-    -    # mcp.settings.host = "0.0.0.0"
-    -    # mcp.settings.port = 47564
-    -    # mcp.run(transport="sse")
-    +    # For sse transport
-    +    mcp.settings.host = "0.0.0.0"
-    +    mcp.settings.port = 47564
-    +    mcp.run(transport="sse")
-
-    -    # For stdio transport
-    -    mcp.run(transport="stdio")
-    +    # # For stdio transport
-    +    # mcp.run(transport="stdio")
-    ```
-
-3.  **Start the MCP Server (SSE):**
+3.  **Build and Start the MCP Server (SSE):**
 
     ```sh
-    uv run main.py
+    uv build
+    uv tool install dist/llm_api_benchmark_mcp_server-0.1.3-py3-none-any.whl # path may varies
+    llm-api-benchmark-mcp-server
     ```
 
 4.  **Configure MCP Client:**

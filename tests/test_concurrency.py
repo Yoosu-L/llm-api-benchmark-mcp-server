@@ -1,5 +1,5 @@
 import pytest
-from utils.concurrency import parse_concurrency_levels
+from llm_api_benchmark_mcp_server.utils.concurrency import parse_concurrency_levels
 
 
 def test_parse_concurrency_levels_single():

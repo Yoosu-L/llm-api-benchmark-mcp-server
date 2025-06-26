@@ -1,7 +1,7 @@
 import pytest
 import respx
 from httpx import Response
-from utils.latency import measure_latency
+from llm_api_benchmark_mcp_server.utils.latency import measure_latency
 
 
 @respx.mock

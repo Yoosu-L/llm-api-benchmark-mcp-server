@@ -1,6 +1,6 @@
 import pytest
 from unittest.mock import AsyncMock, MagicMock
-from utils.openai_client import (
+from llm_api_benchmark_mcp_server.utils.openai_client import (
     ask_openai,
     ask_openai_with_random_input,
     get_first_available_model,

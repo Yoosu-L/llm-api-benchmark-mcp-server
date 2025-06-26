@@ -6,8 +6,8 @@ from typing import Optional
 from openai import AsyncOpenAI
 from openai.types.chat import ChatCompletionMessageParam
 
-from utils.random_prompt import generate_random_phrase
-from utils.statistics import calculate_ttft_statistics
+from .random_prompt import generate_random_phrase
+from .statistics import calculate_ttft_statistics
 
 async def _measure_ttft_worker(
     client: AsyncOpenAI,

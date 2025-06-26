@@ -1,5 +1,5 @@
 import pytest
-from utils.statistics import calculate_statistics, calculate_ttft_statistics
+from llm_api_benchmark_mcp_server.utils.statistics import calculate_statistics, calculate_ttft_statistics
 
 
 def test_calculate_statistics_empty():

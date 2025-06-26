@@ -2,7 +2,7 @@ from openai import AsyncOpenAI
 from openai.types.chat import ChatCompletion, ChatCompletionMessageParam
 from typing import Optional
 
-from utils.random_prompt import generate_random_phrase
+from .random_prompt import generate_random_phrase
 
 async def ask_openai(client: AsyncOpenAI, model: str, prompt: str, max_tokens: int) -> ChatCompletion:
     """

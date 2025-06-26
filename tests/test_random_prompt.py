@@ -1,5 +1,5 @@
 import pytest
-from utils.random_prompt import generate_random_word, generate_random_phrase, MIN_WORD_LENGTH, MAX_WORD_LENGTH
+from llm_api_benchmark_mcp_server.utils.random_prompt import generate_random_word, generate_random_phrase, MIN_WORD_LENGTH, MAX_WORD_LENGTH
 
 
 def test_generate_random_word():

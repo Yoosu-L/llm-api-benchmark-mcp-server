@@ -9,10 +9,10 @@ from mcp.server.fastmcp import FastMCP
 from mcp import types as mcp_types
 
 # Import utilities from the project
-from utils.openai_client import get_first_available_model, estimate_input_tokens
-from utils.concurrency import parse_concurrency_levels
-from utils.latency import measure_latency
-from utils.throughput import measure_throughput
+from .utils.openai_client import get_first_available_model, estimate_input_tokens
+from .utils.concurrency import parse_concurrency_levels
+from .utils.latency import measure_latency
+from .utils.throughput import measure_throughput
 
 # Configure logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
@@ -205,7 +205,7 @@ LLM_BENCHMARK_TOOL_SCHEMA = mcp_types.Tool(
 )
 # --- End of MCP Tool Schema ---
 
-if __name__ == "__main__":
+def main():
     # Patch the tool's schema immediately to include all metadata
     tool = mcp._tool_manager.get_tool("run_llm_benchmark")
     if tool: # Ensure tool is not None before patching
@@ -218,3 +218,6 @@ if __name__ == "__main__":
     
     # For stdio transport
     mcp.run(transport="stdio")
+
+if __name__ == "__main__":
+    main()

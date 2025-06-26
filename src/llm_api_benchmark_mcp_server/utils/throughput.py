@@ -4,9 +4,9 @@ from typing import Optional
 
 from openai import AsyncOpenAI
 
-from utils.openai_client import ask_openai, ask_openai_with_random_input
-from utils.ttft import measure_ttft
-from utils.statistics import calculate_statistics
+from .openai_client import ask_openai, ask_openai_with_random_input
+from .ttft import measure_ttft
+from .statistics import calculate_statistics
 
 async def _measure_throughput_worker(
     client: AsyncOpenAI,
